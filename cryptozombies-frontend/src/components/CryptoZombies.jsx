@@ -8,7 +8,7 @@ const CryptoZombies = () => {
   const [cryptoZombies, setCryptoZombies] = useState(null);
   const [userAccount, setUserAccount] = useState(null);
   const [zombies, setZombies] = useState([]);
-  const [status, setStatus] = useState('Initial');
+  const [status, setStatus] = useState('');
 
   console.log(zombies);
 
@@ -76,9 +76,12 @@ const CryptoZombies = () => {
 
   return (
     <div className='crypto-zombies-container'>
-      <div id='txStatus'>
-        <p>{status}</p>
-      </div>
+      {status != '' && (
+        <div id='txStatus'>
+          <p>{status}</p>
+        </div>
+      )}
+
       <div>
         {zombies.map((zombie, index) => (
           <div key={index} className='zombie'>
