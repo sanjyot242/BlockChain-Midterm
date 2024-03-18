@@ -30,15 +30,28 @@ ganache-cli
 4. Connect your MetaMask wallet to the local network and import accounts from Ganache.
 
 5. Deploy the smart contracts on Ganache:
-truffle migrate --network development
+truffle migrate --network ganache
 
 6. Run the frontend application:
 npm start
+
+## Deployment on Sepolia Testnet
+To deploy and test on Sepolia Testnet, follow these steps:
+
+1. Setup repo on Remix by importing it from Github:
+https://remix.ethereum.org/
+
+2. Add Sepolia TestNet to Metamask, Details @ https://chainid.network/
+
+3. To deploy ZombieOwnership contract, Go to Deploy section in remix, set the environment to "Injected Provider - Metamask", give your Metamask extension the necessary permission that it will ask when you change the environment.
+
+4. After setting environment, select the ZombieOwnership contract and click on deploy, you can see the confirmation of deployment on console or you can check it on https://sepolia.etherscan.io/block/<block-id>, 
 
 ## Technologies Used
 - Solidity for smart contracts
 - Truffle for smart contract deployment and testing
 - Ganache for a local blockchain network
+- Sepolia for a private Ethereum network
 - Web3.js for blockchain interaction
 - React for frontend development
 
