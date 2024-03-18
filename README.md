@@ -17,7 +17,7 @@ CryptoZombies is an interactive coding tutorial that teaches users how to build 
 2. **Improved Website Design:** We revamped the user interface for a more engaging and intuitive experience.
 3. **Creating Kitties Contract on the Backend:** We created a custom kitty smart contract to create new kitties on ganache locally.
 4. **Additional Functionalities:** Users can now transfer zombies and view detailed statistics.
-5. **Automated 
+5. **Automated the retrieval of the zombieOwnership contract address immediately upon its deployment on Ganache, eliminating the need for a hardcoded address in the frontend.**
 6. **Migrated front-end code to use ReactJS**
 7. **Allow users to create their zombies with custom names**
 8. **Level up Zombie using a single button in Zombie Card**
