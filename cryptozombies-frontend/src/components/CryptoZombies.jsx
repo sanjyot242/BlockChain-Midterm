@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import Web3 from 'web3';
 import cryptoZombiesABI from '../cryptozombies_abi.json';
 import './CryptoZombie.css';
+import contractAddresses from '../../../migrations/2_deploy_contracts';
+
 
 const CryptoZombies = () => {
   const [web3, setWeb3] = useState(null);
@@ -24,7 +26,7 @@ const CryptoZombies = () => {
           setUserAccount(accounts[0]);
           const cryptoZombiesContract = new web3Instance.eth.Contract(
             cryptoZombiesABI,
-            '0x938b085C2cb81D96239DfF78A5cce80A0C03E455'
+            contractAddresses.zombieownership
           );
           setCryptoZombies(cryptoZombiesContract);
           fetchZombies(accounts[0], cryptoZombiesContract);
@@ -38,6 +40,19 @@ const CryptoZombies = () => {
 
     initWeb3();
   }, []);
+
+  const fetchContractAddress = async () => {
+    try {
+      const response = await fetch('contractAddresses.txt');
+      const text = await response.text();
+      const lines = text.split('\n');
+      const zombieOwnershipLine = lines.find(line => line.includes('zombieownership'));
+      const address = zombieOwnershipLine.split(': ')[1];
+      setZombieOwnershipAddress(address);
+    } catch (error) {
+      console.error('Error fetching contract address:', error);
+    }
+  };
 
   const fetchZombies = async (owner, contract) => {
     const ids = await contract.methods.getZombiesByOwner(owner).call();
@@ -79,6 +94,25 @@ const CryptoZombies = () => {
       .send({ from: userAccount, value: web3.utils.toWei('0.001', 'ether') });
     fetchZombies(userAccount, cryptoZombies);
     setStatus('Power overwhelming! Zombie successfully leveled up');
+  };
+
+  const levelDown = async (zombieId) => {
+    setStatus('Leveling down your Zombie');
+    const gas = await cryptoZombies.methods
+      .levelDown(zombieId)
+      .estimateGas({ from: userAccount });
+    console.log('gas', gas);
+    const receipt = await cryptoZombies.methods
+      .levelDown(zombieId)
+      .send({ from: userAccount, value: web3.utils.toWei('0.001', 'ether') });
+    console.log('receipt', receipt);
+
+
+    /*await cryptoZombies.methods
+      .levelDown(zombieId)
+      .send({ from: userAccount, value: web3.utils.toWei('0.001', 'ether') });*/
+    fetchZombies(userAccount, cryptoZombies);
+    setStatus('Power degrading! Zombie successfully leveled down');
   };
 
   // useEffect(() => {
@@ -170,6 +204,11 @@ const CryptoZombies = () => {
                     className='bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline'
                     onClick={() => levelUp(index)}>
                     Level Up
+                  </button>
+                  <button
+                    className='bg-red-500  hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline'
+                    onClick={() => levelDown(index)}>
+                    Level Down
                   </button>
                 </div>
               </div>

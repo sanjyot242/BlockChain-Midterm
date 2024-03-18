@@ -130,7 +130,7 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "pragma solidity ^0.4.25;\n\ncontract ERC721 {\n  event Transfer(address indexed _from, address indexed _to, uint256 indexed _tokenId);\n  event Approval(address indexed _owner, address indexed _approved, uint256 indexed _tokenId);\n\n  function balanceOf(address _owner) external view returns (uint256);\n  function ownerOf(uint256 _tokenId) external view returns (address);\n  function transferFrom(address _from, address _to, uint256 _tokenId) external payable;\n  function approve(address _approved, uint256 _tokenId) external payable;\n}\n",
-  "sourcePath": "D:\\CryptoZombie\\contracts\\erc721.sol",
+  "sourcePath": "/Users/Abhinav/Desktop/559/midterm/BlockChain-Midterm/contracts/erc721.sol",
   "ast": {
     "absolutePath": "project:/contracts/erc721.sol",
     "exportedSymbols": {
@@ -1367,7 +1367,7 @@
   },
   "networks": {},
   "schemaVersion": "3.4.16",
-  "updatedAt": "2024-03-18T04:32:11.238Z",
+  "updatedAt": "2024-03-18T04:42:04.020Z",
   "devdoc": {
     "methods": {}
   },

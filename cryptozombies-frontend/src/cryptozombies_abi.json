@@ -37,6 +37,20 @@
       {
         "name": "_zombieId",
         "type": "uint256"
+      }
+    ],
+    "name": "levelDown",
+    "outputs": [],
+    "payable": true,
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_zombieId",
+        "type": "uint256"
       },
       {
         "name": "_kittyId",
