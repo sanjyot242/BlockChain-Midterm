@@ -54,8 +54,3 @@ https://remix.ethereum.org/
 - Sepolia for a private Ethereum network
 - Web3.js for blockchain interaction
 - React for frontend development
-
-## Future Improvements
-- Implement a battle system where zombies can fight against each other.
-- Introduce a marketplace for trading zombies as non-fungible tokens (NFTs).
-- Expand the game mechanics with more features and challenges.
