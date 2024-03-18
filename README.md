@@ -10,7 +10,7 @@
 CryptoZombies is an interactive coding tutorial that teaches users how to build Ethereum smart contracts with Solidity. For our midterm project, we developed a decentralized application (DApp) that allows users to create, feed, and level up their own zombie army.
 
 ## Enhancements Implemented
-1. **Deployment on Goerli Testnet:** We deployed our smart contracts on the Goerli testnet to demonstrate real-world blockchain interaction.
+1. **Deployment on Sepolia Testnet:** We deployed our smart contracts on the Sepolia testnet to demonstrate real-world blockchain interaction.
 2. **Improved Website Design:** We revamped the user interface for a more engaging and intuitive experience.
 3. **Feeding on Kitties:** We integrated a custom kitty smart contract to simulate zombies feeding on kitties.
 4. **Additional Functionalities:** Users can now transfer zombies and view detailed zombie statistics.
