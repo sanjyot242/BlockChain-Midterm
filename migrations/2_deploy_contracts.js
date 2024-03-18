@@ -15,4 +15,3 @@ module.exports = function (deployer) {
   deployer.deploy(zombieownership);
   deployer.deploy(kittyCore);
 };
-await writeContractAddressesToFile(contractAddresses);
