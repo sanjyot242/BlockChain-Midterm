@@ -27,13 +27,13 @@ npm install
 3. Start a local blockchain network using Ganache:
 ganache-cli
 
-4. Deploy the smart contracts:
-truffle migrate --reset
+4. Connect your MetaMask wallet to the local network and import accounts from Ganache.
 
-5. Run the frontend application:
+5. Deploy the smart contracts on Ganache:
+truffle migrate --network development
+
+6. Run the frontend application:
 npm start
-
-6. Connect your MetaMask wallet to the local network and import accounts from Ganache.
 
 ## Technologies Used
 - Solidity for smart contracts
