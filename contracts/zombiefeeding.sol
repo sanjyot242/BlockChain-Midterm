@@ -1,8 +1,9 @@
 pragma solidity ^0.4.25;
 
 import "./zombiefactory.sol";
+import "./KittyCore.sol";
 
-contract KittyInterface {
+/*contract KittyInterface {
   function getKitty(uint256 _id) external view returns (
     bool isGestating,
     bool isReady,
@@ -15,11 +16,11 @@ contract KittyInterface {
     uint256 generation,
     uint256 genes
   );
-}
+}*/
 
 contract ZombieFeeding is ZombieFactory {
 
-  KittyInterface kittyContract;
+  KittyCore kittyContract;
 
   modifier onlyOwnerOf(uint _zombieId) {
     require(msg.sender == zombieToOwner[_zombieId]);
@@ -27,7 +28,7 @@ contract ZombieFeeding is ZombieFactory {
   }
 
   function setKittyContractAddress(address _address) external onlyOwner {
-    kittyContract = KittyInterface(_address);
+    kittyContract = KittyCore(_address);
   }
 
   function _triggerCooldown(Zombie storage _zombie) internal {

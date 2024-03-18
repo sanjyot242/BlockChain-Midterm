@@ -6,6 +6,8 @@ import './CryptoZombie.css';
 const CryptoZombies = () => {
   const [web3, setWeb3] = useState(null);
   const [cryptoZombies, setCryptoZombies] = useState(null);
+  const [cryptoKitties, setkittyContract] = useState(null);
+  // const [feedingContract, setFeedingContract] = useState(null);
   const [userAccount, setUserAccount] = useState(null);
   const [zombies, setZombies] = useState([]);
   const [status, setStatus] = useState('');
@@ -24,9 +26,20 @@ const CryptoZombies = () => {
           setUserAccount(accounts[0]);
           const cryptoZombiesContract = new web3Instance.eth.Contract(
             cryptoZombiesABI,
-            '0x938b085C2cb81D96239DfF78A5cce80A0C03E455'
+            '0x32FfE1C79cD930C1Dcb9f4e237AEB7e4d2Bdb34b'
           );
+          const KittyContract = new web3Instance.eth.Contract(
+            cryptoZombiesABI,
+            '0xA1499e59db4426BF36087d2E4C0F1F2bD4f7E78e'
+          );
+
+          // const FeedingContract = new web3Instance.eth.Contract(
+          //   cryptoZombiesABI,
+          //   '0xF2094BAB68100D58C23fe5e6A452563e64447325'
+          // );
           setCryptoZombies(cryptoZombiesContract);
+          setkittyContract(KittyContract);
+          // setFeedingContract(FeedingContract);
           fetchZombies(accounts[0], cryptoZombiesContract);
         } catch (error) {
           console.error('Could not connect to wallet', error);
@@ -65,11 +78,19 @@ const CryptoZombies = () => {
     fetchZombies(userAccount, cryptoZombies);
   };
 
-  const feedOnKitty = async (zombieId, kittyId) => {
-    await cryptoZombies.methods
-      .feedOnKitty(zombieId, kittyId)
+  // const feedOnKitty = async (zombieId) => {
+  //   const kittyId = prompt('Enter new name for zombie', '');
+  //   console.log(kittyId.toString());
+  //   await feedingContract.methods
+  //     .feedOnKitty(zombieId, kittyId.toString())
+  //     .send({ from: userAccount });
+  //   fetchZombies(userAccount, cryptoZombies);
+  // };
+
+  const createKitty = async () => {
+    await cryptoKitties.methods
+      .createRandomKitty('NoName')
       .send({ from: userAccount });
-    fetchZombies(userAccount, cryptoZombies);
   };
 
   const levelUp = async (zombieId) => {
@@ -136,6 +157,11 @@ const CryptoZombies = () => {
             className='bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-r-full shadow-lg'
             onClick={() => createRandomZombie()}>
             Create Zombie
+          </button>
+          <button
+            className='bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-r-full shadow-lg'
+            onClick={() => createKitty()}>
+            Create Kitty
           </button>
         </div>
 
