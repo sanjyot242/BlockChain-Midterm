@@ -2,6 +2,10 @@ import { useState, useEffect, useRef } from 'react';
 import Web3 from 'web3';
 import cryptoZombiesABI from '../cryptozombies_abi.json';
 import './CryptoZombie.css';
+import contractAddresses from '../../contractAddresses.json';
+
+// Example of using imported addresses
+//console.log(contractAddresses.safemath); // Use the SafeMath contract address
 
 const CryptoZombies = () => {
   const [web3, setWeb3] = useState(null);
@@ -26,11 +30,11 @@ const CryptoZombies = () => {
           setUserAccount(accounts[0]);
           const cryptoZombiesContract = new web3Instance.eth.Contract(
             cryptoZombiesABI,
-            '0xA4C9E3EAF9F59053BfBCae88daFaA5728C9A7d07'
+            contractAddresses.zombieownership
           );
           const KittyContract = new web3Instance.eth.Contract(
             cryptoZombiesABI,
-            '0xF59D7a790cd265Fed4a3B7658cE74dD51BBc8b89'
+            contractAddresses.kittyCore
           );
 
           // const FeedingContract = new web3Instance.eth.Contract(

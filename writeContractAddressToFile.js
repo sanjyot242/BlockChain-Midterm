@@ -1,16 +1,16 @@
 const fs = require('fs');
+const path = require('path');
 
-function writeContractAddressesToFile(contractAddresses) {
-  const filePath = 'contractAddresses.txt';
-  const stream = fs.createWriteStream(filePath, { flags: 'a' });
-  
-  // Write each contract address to the file
-  for (const [contractName, address] of Object.entries(contractAddresses)) {
-    stream.write(`${contractName}: ${address}\n`);
-  }
-  
-  stream.end();
-  console.log('Contract addresses written to', filePath);
-}
-
-module.exports = writeContractAddressesToFile;
+module.exports = function (contractAddresses) {
+  console.log('Executed');
+  const filePath = path.join(
+    __dirname + '/cryptozombies-frontend',
+    'contractAddresses.json'
+  );
+  fs.writeFileSync(
+    filePath,
+    JSON.stringify(contractAddresses, null, 2),
+    'utf-8'
+  );
+  console.log('Contract addresses have been written to:', filePath);
+};
