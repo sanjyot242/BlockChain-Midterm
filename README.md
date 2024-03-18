@@ -67,3 +67,5 @@ To deploy and test on Sepolia Testnet, follow these steps:
 - Sepolia for a private Ethereum network
 - Web3.js for blockchain interaction
 - React for frontend development
+
+## GitHub Link to the DApp: https://github.com/sanjyot242/BlockChain-Midterm
