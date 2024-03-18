@@ -1,11 +1,10 @@
-﻿# BlockChain-Midterm
 # CryptoZombies DApp - Midterm Project
 
 ## Team Members
 - **Sumit Rodrigues** - 885164426 - sumit.rodrigues@csu.fullerton.edu
-- **Sanjyot Satvi** - 885146977 - Email
-- **Abhinav Singh** - 884448622 - Email
-- **Aditya Singh** - 884448614 - Email
+- **Sanjyot Satvi** - 885146977 - satvi.sanjyot@csu.fullerton.edu
+- **Abhinav Singh** - 884448622 - abhinavsingh@csu.fullerton.edu
+- **Aditya Singh** - 884448614 - singhaditya@csu.fullerton.edu
 
 ## Project Overview
 CryptoZombies is an interactive coding tutorial that teaches users how to build Ethereum smart contracts with Solidity. For our midterm project, we developed a decentralized application (DApp) that allows users to create, feed, and level up their own zombie army.
