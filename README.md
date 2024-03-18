@@ -34,10 +34,10 @@ To set up and run the CryptoZombies DApp on your local machine, follow these ste
 4. Connect your MetaMask wallet to the local network and import accounts from Ganache.
 
 5. Deploy the smart contracts on Ganache:
-   truffle migrate --network ganache
+   truffle compile, truffle migrate
 
 6. Run the frontend application:
-   npm start
+   npm run dev
 
 ## Deployment on Sepolia Testnet
 
