@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Web3 from 'web3';
 import cryptoZombiesABI from '../cryptozombies_abi.json';
 import './CryptoZombie.css';
@@ -9,6 +9,7 @@ const CryptoZombies = () => {
   const [userAccount, setUserAccount] = useState(null);
   const [zombies, setZombies] = useState([]);
   const [status, setStatus] = useState('');
+  const zombieNameRef = useRef('');
 
   console.log(zombies);
 
@@ -23,7 +24,7 @@ const CryptoZombies = () => {
           setUserAccount(accounts[0]);
           const cryptoZombiesContract = new web3Instance.eth.Contract(
             cryptoZombiesABI,
-            '0xd0dEF43d385A19575a25d0AC654b7AE8dcBE98ee'
+            '0x938b085C2cb81D96239DfF78A5cce80A0C03E455'
           );
           setCryptoZombies(cryptoZombiesContract);
           fetchZombies(accounts[0], cryptoZombiesContract);
@@ -45,10 +46,22 @@ const CryptoZombies = () => {
     setZombies(zombies);
   };
 
-  const createRandomZombie = async (name) => {
-    await cryptoZombies.methods
+  const createRandomZombie = async () => {
+    console.log('createZombie', zombieNameRef.current.value);
+    const name = zombieNameRef.current.value;
+    if (!name) {
+      setStatus('Please enter a name for your zombie');
+      return;
+    }
+    const gas = await cryptoZombies.methods
       .createRandomZombie(name)
-      .send({ from: userAccount });
+      .estimateGas({ from: userAccount });
+    console.log('gas', gas);
+    const receipt = await cryptoZombies.methods
+      .createRandomZombie(name)
+      .send({ from: userAccount, gas });
+    console.log('receipt', receipt);
+    zombieNameRef.current.value = '';
     fetchZombies(userAccount, cryptoZombies);
   };
 
@@ -74,39 +87,96 @@ const CryptoZombies = () => {
   //   }
   // }, [cryptoZombies, userAccount]);
 
-  return (
-    <div className='crypto-zombies-container'>
-      {status != '' && (
-        <div id='txStatus'>
-          <p>{status}</p>
-        </div>
-      )}
+  // return (
+  //   <div className='crypto-zombies-container'>
+  //     {status != '' && (
+  //       <div id='txStatus'>
+  //         <p>{status}</p>
+  //       </div>
+  //     )}
 
-      <div>
-        {zombies.map((zombie, index) => (
-          <div key={index} className='zombie'>
-            <ul>
-              <li>Name: {zombie.name}</li>
-              <li>DNA: {Number(zombie.dna)}</li>
-              <li>Level: {Number(zombie.level)}</li>
-              <li>Wins: {Number(zombie.winCount)}</li>
-              <li>Losses: {Number(zombie.lossCount)}</li>
-              <li>
-                Ready Time:{' '}
-                {new Date(Number(zombie.readyTime) * 1000).toLocaleString()}
-              </li>
-            </ul>
-            <button className='button' onClick={() => levelUp(index)}>
-              Level Up
-            </button>
+  //     <div>
+  //       {zombies.map((zombie, index) => (
+  //         <div key={index} className='zombie'>
+  //           <img src={greenZombie} alt='Zombie' className='zombie-image' />
+  //           <ul>
+  //             <li>Name: {zombie.name}</li>
+  //             <li>DNA: {Number(zombie.dna)}</li>
+  //             <li>Level: {Number(zombie.level)}</li>
+  //             <li>Wins: {Number(zombie.winCount)}</li>
+  //             <li>Losses: {Number(zombie.lossCount)}</li>
+  //             <li>
+  //               Ready Time:{' '}
+  //               {new Date(Number(zombie.readyTime) * 1000).toLocaleString()}
+  //             </li>
+  //           </ul>
+  //           <button className='button' onClick={() => levelUp(index)}>
+  //             Level Up
+  //           </button>
+  //         </div>
+  //       ))}
+  //     </div>
+  //     <button className='button' onClick={() => createRandomZombie('Sam')}>
+  //       Create Zombie
+  //     </button>
+  //   </div>
+  // );
+
+  return (
+    <div className='bg-gray-900 min-h-screen text-white py-8'>
+      <div className='container mx-auto text-center'>
+        <div className='mb-8'>
+          <input
+            type='text'
+            ref={zombieNameRef}
+            placeholder='Enter Zombie Name'
+            className='text-black mx-2 py-2 px-4 rounded-l-full'
+          />
+          <button
+            className='bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-r-full shadow-lg'
+            onClick={() => createRandomZombie()}>
+            Create Zombie
+          </button>
+        </div>
+
+        {status != '' && (
+          <div id='txStatus' className='mb-4'>
+            <p className='text-green-400'>{status}</p>
           </div>
-        ))}
+        )}
+
+        <div className='flex flex-wrap -mx-3 p-6'>
+          {zombies.map((zombie, index) => (
+            <div key={index} className='w-full md:w-1/3 px-3 mb-6'>
+              <div className='zombie bg-gray-700 hover:bg-gray-600 shadow-lg rounded-lg p-4 flex flex-col items-center transition duration-300 ease-in-out transform hover:-translate-y-1'>
+                <div className='w-44 h-44 mb-4 flex items-center justify-center rounded-full p-2'>
+                  <img
+                    src={`https://robohash.org/${index + zombie.name}?set=set1`}
+                    alt='Zombie'
+                    className='zombie-image object-cover rounded-none'
+                  />
+                </div>
+                <div className='text-left w-full'>
+                  <h2 className='text-lg font-bold mb-1'>
+                    Name: {zombie.name}
+                  </h2>
+                  <p className='text-md'>DNA: {Number(zombie.dna)}</p>
+                  <p className='text-md'>Level: {Number(zombie.level)}</p>
+                  <p className='text-sm mb-4'>
+                    Ready Time:{' '}
+                    {new Date(Number(zombie.readyTime) * 1000).toLocaleString()}
+                  </p>
+                  <button
+                    className='bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline'
+                    onClick={() => levelUp(index)}>
+                    Level Up
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
-      <button
-        className='button'
-        onClick={() => createRandomZombie(userAccount)}>
-        Create Zombie
-      </button>
     </div>
   );
 };
